@@ -4,7 +4,7 @@ using Amazon.CDK.AWS.Lambda;
 using Amazon.CDK.AWS.Logs;
 using Constructs;
 
-namespace StreamingLambdaFileDownloadPoc
+namespace Cdk
 {
     public class StreamingLambdaFileDownloadPocStack : Stack
     {
@@ -21,14 +21,13 @@ namespace StreamingLambdaFileDownloadPoc
             var fileStreamingLambda = new Function(this, "FileStreamingLambda", new FunctionProps
             {
                 Runtime = Runtime.NODEJS_20_X,
-                //Code = Code.FromAsset("../../../../Kaha.GPT.LlmStreamingLambda"),
                 Code = Code.FromAsset("src/fileStreamingLambda"),
                 Handler = "index.handler",
                 Role = lambdaRole,
                 Timeout = Duration.Seconds(60)
             });
 
-            var fileStreamingLambdaLogGroup = new LogGroup(this, "fileStreamingLambdaLogGroup", new LogGroupProps
+            _ = new LogGroup(this, "fileStreamingLambdaLogGroup", new LogGroupProps
             {
                 LogGroupName = "/aws/lambda/" + fileStreamingLambda.FunctionName,
                 RemovalPolicy = RemovalPolicy.DESTROY,
